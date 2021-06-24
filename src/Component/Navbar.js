@@ -11,9 +11,12 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import logo from "../Images/mainlogo.png";
 import HomeIcon from "@material-ui/icons/Home";
-import DevicesIcon from '@material-ui/icons/Devices';
-import InfoIcon from '@material-ui/icons/Info';
+import DevicesIcon from "@material-ui/icons/Devices";
+import InfoIcon from "@material-ui/icons/Info";
 import Drawer from "./Drawer";
+import Badge from "@material-ui/core/Badge";
+import { LinearProgress } from "@material-ui/core";
+import { useProductsContext } from "../context/productsContext";
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     flexGrow: 1,
     backgroundColor: "#000000",
-    overflow:"hidden"
+    overflow: "hidden",
   },
   logo: {
     width: 145,
@@ -94,6 +97,11 @@ const useStyles = makeStyles((theme) => ({
       color: "red",
     },
   },
+  progress: {
+    position: "fixed",
+    zIndex: "99999",
+    width: "100%",
+  },
 }));
 
 const buttons = [
@@ -107,24 +115,30 @@ const buttons = [
     id: 2,
     text: "Product",
     url: "/product",
-    icon:<DevicesIcon />
+    icon: <DevicesIcon />,
   },
   {
     id: 3,
     text: "About",
     url: "/about",
-    icon:<InfoIcon />
+    icon: <InfoIcon />,
   },
 ];
 
 export default function Navbar() {
+  const {toggleAmount,badgeNum} = useProductsContext()
   const classes = useStyles();
   const [anchor, setAnchor] = useState(false);
+console.log(badgeNum)
   const toggleDrawer = (value) => {
     setAnchor(value);
   };
+  const { singleProductLoading } = useProductsContext();
   return (
-
+    <div>
+      {singleProductLoading && (
+        <LinearProgress color="primary" classes={{ root: classes.progress }} />
+      )}
       <AppBar position="sticky" className={classes.appbarRoot}>
         <Toolbar className={classes.toolbarRoot}>
           <IconButton
@@ -153,8 +167,15 @@ export default function Navbar() {
           </div>
           <div className={classes.iconContainer}>
             <IconButton className={classes.iconButton}>
-              <AddShoppingCartIcon />
-              Cart
+              <Link
+                to="/cart"
+                style={{ textDecoration: "none", color: "#fff" }}
+              >
+                <Badge badgeContent={badgeNum} color="primary">
+                  <AddShoppingCartIcon />
+                  Cart
+                </Badge>
+              </Link>
             </IconButton>
             <IconButton className={classes.iconButton}>
               <PersonAddIcon />
@@ -164,5 +185,6 @@ export default function Navbar() {
         </Toolbar>
         <Drawer buttons={buttons} toggleDrawer={toggleDrawer} anchor={anchor} />
       </AppBar>
+    </div>
   );
 }

@@ -11,6 +11,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import logo from "../Images/mainlogo.png";
+import Badge from '@material-ui/core/Badge'
 const useStyles = makeStyles(() => ({
   paper: {
     background: "#000000",
@@ -96,11 +97,16 @@ export default function Drawer({ buttons, toggleDrawer, anchor }) {
             })}
           </List>
           <div style={{width:"100%",display:"flex",justifyContent:"center",marginTop:"30px"}}>
-              <IconButton className={classes.iconButton}>
+              <IconButton className={classes.iconButton}  onClick={() => toggleDrawer(false)}>
+                <Link to="/cart" style={{textDecoration:"none",color:"#fff"}}>
+                <Badge  badgeContent={5} color="primary">
+
                   <AddShoppingCartIcon />
                   Cart
+                </Badge>
+                </Link>
               </IconButton>
-              <IconButton className={classes.iconButton}>
+              <IconButton className={classes.iconButton}  onClick={() => toggleDrawer(false)}>
                   <PersonAddIcon />
                   Login
               </IconButton>

@@ -123,14 +123,14 @@ export default function Showing() {
         }}
         showDots={false}
         sliderClass=""
-        slidesToSlide={4}
+        slidesToSlide={1}
         swipeable
       >
        
          {images.map((image,index)=>{
            const {src,text} = image
            return <div key={index} style={{widh:"25%",textAlign:"center",fontWeight:"100",letterSpacing:"0.1rem"}}>
-             <Link style={{textDecoration:"none",color:"#000"}}>
+             <Link  style={{textDecoration:"none",color:"#000"}}>
               <img src={src}/>
               <h3 style={{fontFamily: "Raleway, sans-serif",}}>{text}</h3>
              </Link>
